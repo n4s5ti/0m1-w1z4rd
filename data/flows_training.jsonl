@@ -1,0 +1,52 @@
+{"instruction": "Translate to flow command: start the hello world flow", "input": "", "output": "COMMAND: flow hello_world\n"}
+{"instruction": "Translate to flow command: launch hello world", "input": "", "output": "COMMAND: flow hello_world\n"}
+{"instruction": "Translate to flow command: open the greeting demo flow experience", "input": "", "output": "COMMAND: flow hello_world\n"}
+{"instruction": "Translate to flow command: run the workflow for greeting demo flow", "input": "", "output": "COMMAND: flow hello_world\n"}
+{"instruction": "Translate to flow command: I need greeting demo flow now", "input": "", "output": "COMMAND: flow hello_world\n"}
+{"instruction": "Translate to flow command: activate the hello world routine", "input": "", "output": "COMMAND: flow hello_world\n"}
+{"instruction": "Translate to flow command: can you begin greeting demo flow", "input": "", "output": "COMMAND: flow hello_world\n"}
+{"instruction": "Translate to flow command: take me into the hello world flow", "input": "", "output": "COMMAND: flow hello_world\n"}
+{"instruction": "Translate to flow command: please kick off greeting demo flow", "input": "", "output": "COMMAND: flow hello_world\n"}
+{"instruction": "Translate to flow command: bring up hello world", "input": "", "output": "COMMAND: flow hello_world\n"}
+{"instruction": "Translate to flow command: let's use the greeting demo flow workflow", "input": "", "output": "COMMAND: flow hello_world\n"}
+{"instruction": "Translate to flow command: initiate greeting demo flow", "input": "", "output": "COMMAND: flow hello_world\n"}
+{"instruction": "Translate to flow command: use hello flow", "input": "", "output": "COMMAND: flow hello_world\n"}
+{"instruction": "Translate to flow command: use greeting flow", "input": "", "output": "COMMAND: flow hello_world\n"}
+{"instruction": "Translate to flow command: start the patient intake flow", "input": "", "output": "COMMAND: flow patient_intake\n"}
+{"instruction": "Translate to flow command: launch patient intake", "input": "", "output": "COMMAND: flow patient_intake\n"}
+{"instruction": "Translate to flow command: open the guided patient intake flow experience", "input": "", "output": "COMMAND: flow patient_intake\n"}
+{"instruction": "Translate to flow command: run the workflow for guided patient intake flow", "input": "", "output": "COMMAND: flow patient_intake\n"}
+{"instruction": "Translate to flow command: I need guided patient intake flow now", "input": "", "output": "COMMAND: flow patient_intake\n"}
+{"instruction": "Translate to flow command: activate the patient intake routine", "input": "", "output": "COMMAND: flow patient_intake\n"}
+{"instruction": "Translate to flow command: can you begin guided patient intake flow", "input": "", "output": "COMMAND: flow patient_intake\n"}
+{"instruction": "Translate to flow command: take me into the patient intake flow", "input": "", "output": "COMMAND: flow patient_intake\n"}
+{"instruction": "Translate to flow command: please kick off guided patient intake flow", "input": "", "output": "COMMAND: flow patient_intake\n"}
+{"instruction": "Translate to flow command: bring up patient intake", "input": "", "output": "COMMAND: flow patient_intake\n"}
+{"instruction": "Translate to flow command: let's use the guided patient intake flow workflow", "input": "", "output": "COMMAND: flow patient_intake\n"}
+{"instruction": "Translate to flow command: initiate guided patient intake flow", "input": "", "output": "COMMAND: flow patient_intake\n"}
+{"instruction": "Translate to flow command: use patient intake", "input": "", "output": "COMMAND: flow patient_intake\n"}
+{"instruction": "Translate to flow command: use medical intake", "input": "", "output": "COMMAND: flow patient_intake\n"}
+{"instruction": "Translate to flow command: what time is it", "input": "", "output": "COMMAND: none\n"}
+{"instruction": "Translate to flow command: tell me a joke", "input": "", "output": "COMMAND: none\n"}
+{"instruction": "Translate to flow command: what is the weather outside", "input": "", "output": "COMMAND: none\n"}
+{"instruction": "Translate to flow command: set a timer for five minutes", "input": "", "output": "COMMAND: none\n"}
+{"instruction": "Translate to flow command: remind me to call Sam tomorrow", "input": "", "output": "COMMAND: none\n"}
+{"instruction": "Translate to flow command: turn the volume down", "input": "", "output": "COMMAND: none\n"}
+{"instruction": "Translate to flow command: how do I make pasta", "input": "", "output": "COMMAND: none\n"}
+{"instruction": "Translate to flow command: read my latest email", "input": "", "output": "COMMAND: none\n"}
+{"instruction": "Translate to flow command: play some music", "input": "", "output": "COMMAND: none\n"}
+{"instruction": "Translate to flow command: what is on my calendar", "input": "", "output": "COMMAND: none\n"}
+{"instruction": "Translate to flow command: find a coffee shop nearby", "input": "", "output": "COMMAND: none\n"}
+{"instruction": "Translate to flow command: translate this sentence to Spanish", "input": "", "output": "COMMAND: none\n"}
+{"instruction": "Translate to flow command: what does this word mean", "input": "", "output": "COMMAND: none\n"}
+{"instruction": "Translate to flow command: calculate fifteen times seven", "input": "", "output": "COMMAND: none\n"}
+{"instruction": "Translate to flow command: give me the latest news", "input": "", "output": "COMMAND: none\n"}
+{"instruction": "Translate to flow command: take a note about groceries", "input": "", "output": "COMMAND: none\n"}
+{"instruction": "Translate to flow command: how much battery do I have", "input": "", "output": "COMMAND: none\n"}
+{"instruction": "Translate to flow command: send a message to Jordan", "input": "", "output": "COMMAND: none\n"}
+{"instruction": "Translate to flow command: search the web for local events", "input": "", "output": "COMMAND: none\n"}
+{"instruction": "Translate to flow command: turn on the living room lights", "input": "", "output": "COMMAND: none\n"}
+{"instruction": "Translate to flow command: what was the score last night", "input": "", "output": "COMMAND: none\n"}
+{"instruction": "Translate to flow command: book a ride home", "input": "", "output": "COMMAND: none\n"}
+{"instruction": "Translate to flow command: read the next item on my to-do list", "input": "", "output": "COMMAND: none\n"}
+{"instruction": "Translate to flow command: find the nearest pharmacy", "input": "", "output": "COMMAND: none\n"}

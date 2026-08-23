@@ -1,0 +1,43 @@
+{"instruction":"Translate to flow command: say hi through the demo","command":"flow hello_world","style":"conversational"}
+{"instruction":"Translate to flow command: I want the greeting bot","command":"flow hello_world","style":"conversational"}
+{"instruction":"Translate to flow command: hello-world demo please","command":"flow hello_world","style":"telegraphic"}
+{"instruction":"Translate to flow command: could we do the welcoming example","command":"flow hello_world","style":"polite"}
+{"instruction":"Translate to flow command: show me the simple hello interaction","command":"flow hello_world","style":"conversational"}
+{"instruction":"Translate to flow command: fire up the sample that greets me","command":"flow hello_world","style":"jargon"}
+{"instruction":"Translate to flow command: greetings demo","command":"flow hello_world","style":"minimal"}
+{"instruction":"Translate to flow command: let's try the hello bot first","command":"flow hello_world","style":"conversational"}
+{"instruction":"Translate to flow command: start the introductory greeting scenario","command":"flow hello_world","style":"formal"}
+{"instruction":"Translate to flow command: give me the welcome demo","command":"flow hello_world","style":"conversational"}
+{"instruction":"Translate to flow command: I need to complete a patient questionnaire","command":"flow patient_intake","style":"conversational"}
+{"instruction":"Translate to flow command: begin collecting my medical details","command":"flow patient_intake","style":"formal"}
+{"instruction":"Translate to flow command: open the health intake interview","command":"flow patient_intake","style":"jargon"}
+{"instruction":"Translate to flow command: help me check in as a patient","command":"flow patient_intake","style":"conversational"}
+{"instruction":"Translate to flow command: medical forms","command":"flow patient_intake","style":"minimal"}
+{"instruction":"Translate to flow command: I have to answer the clinic's intake questions","command":"flow patient_intake","style":"conversational"}
+{"instruction":"Translate to flow command: guide me through registration for my appointment","command":"flow patient_intake","style":"conversational"}
+{"instruction":"Translate to flow command: commence the patient assessment","command":"flow patient_intake","style":"formal"}
+{"instruction":"Translate to flow command: can the nurse intake assistant ask me the questions","command":"flow patient_intake","style":"question"}
+{"instruction":"Translate to flow command: start my new-patient check-in","command":"flow patient_intake","style":"telegraphic"}
+{"instruction":"Translate to flow command: what's the capital of Iceland","command":"none","style":"knowledge"}
+{"instruction":"Translate to flow command: make a shopping list for dinner","command":"none","style":"assistant"}
+{"instruction":"Translate to flow command: pause the podcast","command":"none","style":"device-control"}
+{"instruction":"Translate to flow command: I need directions to the airport","command":"none","style":"navigation"}
+{"instruction":"Translate to flow command: add milk to my reminders","command":"none","style":"assistant"}
+{"instruction":"Translate to flow command: read me today's forecast","command":"none","style":"knowledge"}
+{"instruction":"Translate to flow command: draft a birthday message","command":"none","style":"writing"}
+{"instruction":"Translate to flow command: how tall is Mount Everest","command":"none","style":"knowledge"}
+{"instruction":"Translate to flow command: stop the alarm","command":"none","style":"device-control"}
+{"instruction":"Translate to flow command: who won the match","command":"none","style":"knowledge"}
+{"instruction":"Translate to flow command: find me a vegetarian recipe","command":"none","style":"search"}
+{"instruction":"Translate to flow command: dim the kitchen lights","command":"none","style":"device-control"}
+{"instruction":"Translate to flow command: do I have any meetings this afternoon","command":"none","style":"calendar"}
+{"instruction":"Translate to flow command: send an update to the team","command":"none","style":"messaging"}
+{"instruction":"Translate to flow command: what is 18 percent of 240","command":"none","style":"calculation"}
+{"instruction":"Translate to flow command: translate good morning into French","command":"none","style":"translation"}
+{"instruction":"Translate to flow command: make the screen brighter","command":"none","style":"device-control"}
+{"instruction":"Translate to flow command: find the closest gas station","command":"none","style":"navigation"}
+{"instruction":"Translate to flow command: start a fifteen minute focus timer","command":"none","style":"assistant"}
+{"instruction":"Translate to flow command: explain how photosynthesis works","command":"none","style":"knowledge"}
+{"instruction":"Translate to flow command: read the first item from my inbox","command":"none","style":"email"}
+{"instruction":"Translate to flow command: put jazz on","command":"none","style":"music"}
+{"instruction":"Translate to flow command: call my sister","command":"none","style":"calling"}

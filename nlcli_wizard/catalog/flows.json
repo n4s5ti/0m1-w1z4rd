@@ -1,0 +1,18 @@
+[
+  {
+    "name": "hello_world",
+    "description": "Greeting demo flow",
+    "script": "/home/n4s5ti/Documents/dev/voice-stack-analysis/pipecat/examples/flows/hello_world.py",
+    "transport": "webrtc",
+    "magic_words": ["hello flow", "greeting flow"],
+    "extras": ["google", "daily"]
+  },
+  {
+    "name": "patient_intake",
+    "description": "Guided patient intake flow",
+    "script": "/home/n4s5ti/Documents/dev/voice-stack-analysis/pipecat/examples/flows/patient_intake.py",
+    "transport": "webrtc",
+    "magic_words": ["patient intake", "medical intake"],
+    "extras": ["deepgram", "daily"]
+  }
+]

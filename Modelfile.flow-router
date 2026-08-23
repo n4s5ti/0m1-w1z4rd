@@ -1,0 +1,6 @@
+FROM ./models/flow-router-gemma3-1b.Q4_K_M.gguf
+
+PARAMETER temperature 0
+PARAMETER seed 42
+PARAMETER num_ctx 512
+PARAMETER num_predict 32

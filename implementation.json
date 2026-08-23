@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "implementation_id": "0m1-w1z4rd",
+  "display_name": "0m1-w1z4rd Omi Flow Router",
+  "version": "0.1.0+omi.1",
+  "upstream": {
+    "repository": "https://github.com/n4s5ti/nlcli-wizard.git",
+    "commit": "6b1885d"
+  },
+  "catalog": {
+    "path": "nlcli_wizard/catalog/flows.json",
+    "sha256": "f67027e9b6c678a9c8299bd180483d7539d4f0536baab25bc47051bf92c85677"
+  },
+  "training_data": {
+    "path": "data/flows_training.jsonl",
+    "sha256": "8ab5923cfc551ab6799f139e2e81aa09f583db515ac301e8a57abd73e8721bb5",
+    "rows": 52
+  },
+  "model": {
+    "path": "models/flow-router-gemma3-1b.Q4_K_M.gguf",
+    "sha256": "371a9e1428d69a5156b30409e3915cbf212af2efa648e2f77c214dcc5f71670b",
+    "ollama_name": "0m1-w1z4rd:latest",
+    "format": "GGUF",
+    "quantization": "Q4_K_M"
+  },
+  "output_contract": {
+    "kind": "closed_catalog_candidate",
+    "targets": [
+      "flow hello_world",
+      "flow patient_intake",
+      "none"
+    ],
+    "execution_authority": false
+  },
+  "evaluation": {
+    "summary": "results/flow-router_summary.json",
+    "held_out_rows": 43,
+    "exact_accuracy": 0.7209302325581395,
+    "mean_latency_seconds": 0.33085330142531283
+  }
+}

@@ -1,0 +1,97 @@
+[build-system]
+requires = ["setuptools>=68.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "0m1-w1z4rd"
+version = "0.1.0+omi.1"
+description = "Isolated Omi flow-router implementation built from nlcli-wizard"
+readme = "README.md"
+authors = [
+    {name = "Pranav Kumaar", email = "sachinspkofficialyt@gmail.com"}
+]
+license = "MIT"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Shells",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+keywords = ["omi", "flow-router", "cli", "natural-language", "llm", "slm", "ai", "ml"]
+requires-python = ">=3.8"
+dependencies = [
+    "click>=8.0.0,<9.0.0",
+    "rich>=13.0.0,<14.0.0",
+    "transformers>=4.46.0,<5.0.0",
+    "torch>=2.0.0,<3.0.0",
+    "llama-cpp-python>=0.2.0,<1.0.0",
+    "huggingface-hub>=0.20.0,<1.0.0",
+]
+
+[project.optional-dependencies]
+training = [
+    "unsloth>=2025.1",
+    "peft>=0.13.0,<1.0.0",
+    "trl>=0.12.0,<1.0.0",
+    "bitsandbytes>=0.44.0,<1.0.0",
+    "datasets>=2.14.0,<3.0.0",
+    "accelerate>=0.25.0,<1.0.0",
+]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+]
+all = [
+    "0m1-w1z4rd[training,dev]",
+]
+
+[project.urls]
+Upstream = "https://github.com/n4s5ti/nlcli-wizard"
+
+[project.scripts]
+0m1-w1z4rd = "nlcli_wizard.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["nlcli_wizard*", "eval*"]
+exclude = ["tests*", "docs*", "training*"]
+
+[tool.setuptools.package-data]
+nlcli_wizard = ["catalog/*.json"]
+
+[tool.black]
+line-length = 100
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "B", "Q"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+# Coverage is opt-in (`pytest --cov=nlcli_wizard`) rather than a default addopt, so a
+# bare `pytest` works without pytest-cov installed.
+addopts = "--strict-markers"
