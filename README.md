@@ -1,25 +1,37 @@
-# 0m1-w1z4rd
+# wiz4rd
 
-Isolated, Omi-specific customization of
-[`nlcli-wizard`](https://github.com/n4s5ti/nlcli-wizard). The leetspeak identity is
-deliberate: this repository owns one implementation—Omi flow-intent routing—while
-the upstream project remains the reusable training and evaluation substrate.
+Omi-specific flow-router customization of
+[`nlcli-wizard`](https://github.com/n4s5ti/nlcli-wizard). `wiz4rd` owns the
+Omi implementation while preserving the upstream `nlcli_wizard` Python import
+package for compatibility.
 
 The implementation carries its own catalog snapshot, training and held-out data,
 GGUF identity, cache/state namespaces, CLI entry point, and evaluation evidence.
-It does not register itself globally or share execution authority with another
-Wizard use. See [`CUSTOMIZATION.md`](CUSTOMIZATION.md) for the isolation contract.
+Predictions are preview-only closed-catalog candidates; the consuming Omi host
+retains lifecycle, authorization, and execution authority. See
+[`CUSTOMIZATION.md`](CUSTOMIZATION.md) for the customization boundary.
+
+## Install and use globally
+
+From this checkout, install the global CLI in editable mode:
 
 ```bash
-uv venv --python 3.12 .venv
-uv pip install --python .venv/bin/python -e . --no-deps pytest click rich huggingface-hub
-.venv/bin/python -m nlcli_wizard.dataset_flows
-.venv/bin/python -m training.train_flow_router --validate-only
-.venv/bin/0m1-w1z4rd list-tools
+uv tool install --editable . --force
 ```
 
-> The remainder of this README preserves the upstream framework documentation and
-> provenance. Omi-specific behavior belongs to this repository, not upstream core.
+Editable installation is canonical because the bundled GGUF remains in this
+checkout's `models/` directory, which is excluded from wheel data. The global
+`wiz4rd` command therefore continues to resolve the checkout-relative model.
+
+From any directory:
+
+```bash
+wiz4rd list-tools
+wiz4rd translate --cli-tool flow start the greeting demo
+```
+
+> The remainder of this README preserves concise upstream framework attribution.
+> Omi-specific behavior belongs to this repository, not upstream core.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)

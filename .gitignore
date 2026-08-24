@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# 0m1-w1z4rd .gitignore
+# wiz4rd .gitignore
 # Principle: source, datasets, docs, and eval results are tracked.
 # Model weights, build artifacts, and private notes are not.
 # ---------------------------------------------------------------------------
@@ -81,7 +81,7 @@ Thumbs.db
 # --- Local tool state ---
 .claude/settings.local.json
 .nlcli_wizard/
-.0m1-w1z4rd/
+.wiz4rd/
 history.json
 .env
 .env.local

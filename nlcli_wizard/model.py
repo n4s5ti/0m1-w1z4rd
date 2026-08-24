@@ -74,7 +74,7 @@ class ModelManager:
         self._model_path = model_path
 
         # Model cache directory
-        self.cache_dir = Path.home() / ".cache" / "0m1-w1z4rd" / "models"
+        self.cache_dir = Path.home() / ".cache" / "wiz4rd" / "models"
         self.cache_dir.mkdir(parents=True, exist_ok=True)
 
     @property

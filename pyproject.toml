@@ -3,7 +3,7 @@ requires = ["setuptools>=68.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "0m1-w1z4rd"
+name = "wiz4rd"
 version = "0.1.0+omi.1"
 description = "Isolated Omi flow-router implementation built from nlcli-wizard"
 readme = "README.md"
@@ -52,14 +52,14 @@ dev = [
     "mypy>=1.0.0",
 ]
 all = [
-    "0m1-w1z4rd[training,dev]",
+    "wiz4rd[training,dev]",
 ]
 
 [project.urls]
 Upstream = "https://github.com/n4s5ti/nlcli-wizard"
 
 [project.scripts]
-0m1-w1z4rd = "nlcli_wizard.cli:main"
+wiz4rd = "nlcli_wizard.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["."]

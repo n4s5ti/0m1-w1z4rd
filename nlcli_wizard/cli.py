@@ -19,7 +19,7 @@ console = Console()
 @click.version_option(version=__version__)
 def main():
     """
-    0m1-w1z4rd - Isolated Omi flow-router implementation
+    wiz4rd - Isolated Omi flow-router implementation
     """
     pass
 
@@ -42,7 +42,7 @@ def translate(cli_tool: str, model_path: str, instruction: tuple):
     Translate natural language to CLI command.
 
     Examples:
-        0m1-w1z4rd translate --cli-tool flow start the greeting demo
+        wiz4rd translate --cli-tool flow start the greeting demo
     """
     nl_instruction = " ".join(instruction)
 
@@ -57,7 +57,9 @@ def translate(cli_tool: str, model_path: str, instruction: tuple):
         if result["success"]:
             console.print(f"[green]Input:[/green] {nl_instruction}")
             console.print(f"[blue]Command:[/blue] {result['command']}")
-            console.print(f"[dim]Confidence: {result['confidence']:.0%}[/dim]")
+            confidence = result["confidence"]
+            confidence_text = "unavailable" if confidence is None else f"{confidence:.0%}"
+            console.print(f"[dim]Confidence: {confidence_text}[/dim]")
             console.print(f"[dim]{result['explanation']}[/dim]")
 
             if result["alternatives"]:
@@ -102,7 +104,7 @@ def cache_dir():
     """
     Show the model cache directory.
     """
-    cache_path = Path.home() / ".cache" / "0m1-w1z4rd" / "models"
+    cache_path = Path.home() / ".cache" / "wiz4rd" / "models"
     console.print(f"[cyan]Model cache directory:[/cyan] {cache_path}")
 
     if cache_path.exists():

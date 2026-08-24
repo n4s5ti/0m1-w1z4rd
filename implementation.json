@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "implementation_id": "0m1-w1z4rd",
-  "display_name": "0m1-w1z4rd Omi Flow Router",
+  "implementation_id": "wiz4rd",
+  "display_name": "wiz4rd Omi Flow Router",
   "version": "0.1.0+omi.1",
   "upstream": {
     "repository": "https://github.com/n4s5ti/nlcli-wizard.git",
@@ -19,7 +19,7 @@
   "model": {
     "path": "models/flow-router-gemma3-1b.Q4_K_M.gguf",
     "sha256": "371a9e1428d69a5156b30409e3915cbf212af2efa648e2f77c214dcc5f71670b",
-    "ollama_name": "0m1-w1z4rd:latest",
+    "ollama_name": "wiz4rd:latest",
     "format": "GGUF",
     "quantization": "Q4_K_M"
   },

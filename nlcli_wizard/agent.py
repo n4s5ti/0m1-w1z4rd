@@ -57,7 +57,7 @@ class NLCLIAgent:
         Returns:
             Dictionary with:
                 - command: Generated CLI command string
-                - confidence: Model confidence score (0-1)
+                - confidence: Model confidence score when provided, otherwise None
                 - explanation: Brief explanation of what command does
                 - alternatives: List of alternative interpretations
                 - success: Whether translation succeeded
@@ -73,13 +73,14 @@ class NLCLIAgent:
 
         # Validate command
         is_valid = self._validate_command(parsed.get("command", ""))
+        confidence = parsed.get("confidence")
 
         return {
             "command": parsed.get("command", ""),
-            "confidence": parsed.get("confidence", 0.0),
+            "confidence": confidence,
             "explanation": parsed.get("explanation", ""),
             "alternatives": parsed.get("alternatives", []),
-            "success": is_valid and parsed.get("confidence", 0.0) >= self.confidence_threshold,
+            "success": is_valid and (confidence is None or confidence >= self.confidence_threshold),
         }
 
     def _normalize_input(self, text: str) -> str:
@@ -104,9 +105,9 @@ class NLCLIAgent:
         EXPLANATION: <brief explanation>
         ALTERNATIVES: <alternative1> | <alternative2>
         """
-        result = {
+        result: Dict[str, Any] = {
             "command": "",
-            "confidence": 0.0,
+            "confidence": None,
             "explanation": "",
             "alternatives": [],
         }
@@ -197,8 +198,7 @@ class CommandHistory:
             history_file: Path to JSON file storing history
         """
         self.history_file = (
-            history_file
-            or Path.home() / ".local" / "state" / "0m1-w1z4rd" / "history.json"
+            history_file or Path.home() / ".local" / "state" / "wiz4rd" / "history.json"
         )
         self.history_file.parent.mkdir(parents=True, exist_ok=True)
 
