@@ -38,11 +38,11 @@ dependencies = [
 [project.optional-dependencies]
 training = [
     "unsloth>=2025.1",
-    "peft>=0.13.0,<1.0.0",
-    "trl>=0.12.0,<1.0.0",
+    "peft>=0.18.0,<1.0.0",
+    "trl>=0.18.2,<=0.24.0",
     "bitsandbytes>=0.44.0,<1.0.0",
-    "datasets>=2.14.0,<3.0.0",
-    "accelerate>=0.25.0,<1.0.0",
+    "datasets>=3.4.1,<4.4.0",
+    "accelerate>=1.1.0,<2.0.0",
 ]
 dev = [
     "pytest>=7.0.0",

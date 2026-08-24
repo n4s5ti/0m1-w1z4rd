@@ -4,6 +4,7 @@ NL-CLI Agent - Core translation logic from natural language to CLI commands
 
 import json
 import re
+import shutil
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -143,11 +144,7 @@ class NLCLIAgent:
         if not command:
             return False
 
-        # Must start with CLI tool name
-        if not command.startswith(self.cli_tool):
-            return False
-
-        # Check for shell injection patterns
+        # Check for shell injection patterns before validating the CLI tool.
         dangerous_chars = [";", "&&", "||", "`", "$"]
         for char in dangerous_chars:
             if char in command:
@@ -155,6 +152,13 @@ class NLCLIAgent:
 
         # Check for redirection (could be legitimate, but risky)
         if ">" in command or "<" in command:
+            return False
+
+        if self.cli_tool == "personal":
+            return bool(shutil.which(command.split(maxsplit=1)[0]))
+
+        # Must start with CLI tool name
+        if not command.startswith(self.cli_tool):
             return False
 
         return True

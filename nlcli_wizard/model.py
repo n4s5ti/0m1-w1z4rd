@@ -46,6 +46,10 @@ class ModelManager:
             "filename": "flow-router-gemma3-1b.Q4_K_M.gguf",
             "repo": None,
         },
+        "personal": {
+            "filename": "wiz4rd-personal.Q4_K_M.gguf",
+            "repo": None,
+        },
     }
     DEFAULT_FILENAME_PATTERN = "{tool}_gemma4_e2b_q4km.gguf"  # Updated default pattern
 

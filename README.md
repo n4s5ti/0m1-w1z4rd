@@ -146,6 +146,32 @@ python -m nlcli_wizard.dataset_docker  # generates data/docker_training.jsonl
 python -m eval.run_eval --model models/docker_gemma3_4b_q4km.gguf --template gemma3
 ```
 
+For a local model prioritized by recent Atuin usage, build a sanitized curriculum from
+explicitly approved CLI help before training:
+
+```bash
+uv venv --python 3.12 .venv-training
+uv pip install --python .venv-training/bin/python -e ".[training]"
+
+.venv-training/bin/python -m training.build_local_curriculum \
+  --tool atuin \
+  --output .wiz4rd/atuin-curriculum
+
+.venv-training/bin/python -m training.train_curriculum \
+  --train .wiz4rd/atuin-curriculum/train.jsonl \
+  --test .wiz4rd/atuin-curriculum/test.jsonl \
+  --output .wiz4rd/training-run-atuin \
+  --canonical-gguf ~/.cache/wiz4rd/models/wiz4rd-personal.Q4_K_M.gguf
+
+wiz4rd translate --cli-tool personal "show atuin history"
+```
+
+The builder opens Atuin's database read-only and uses sanitized counts to prioritize
+tools. It never writes raw history commands, arguments, working directories, environment
+values, or Hermes guidance into the curriculum. Only explicitly repeated `--tool` values
+are invoked with `--help`. Start with Atuin, then add ranked tools in explicit batches;
+`coverage_gaps.json` is the repeatable queue for eventual all-CLI coverage.
+
 ## How it works
 
 ```
