@@ -24,26 +24,15 @@ def main():
     pass
 
 
-@main.command()
-@click.option(
-    "--cli-tool",
-    default="venvy",
-    help="CLI tool to translate for (e.g., venvy, docker)",
-)
-@click.option(
-    "--model-path",
-    default=None,
-    type=click.Path(exists=True),
-    help="Path to GGUF model file (auto-detected if not specified)",
-)
-@click.argument("instruction", nargs=-1, required=True)
-def translate(cli_tool: str, model_path: str, instruction: tuple):
-    """
-    Translate natural language to CLI command.
+DIRECT_TOOL_MAPPING = {
+    "venvy": "venvy",
+    "docker": "docker",
+    "flow": "flow",
+    "atuin": "personal",
+}
 
-    Examples:
-        wiz4rd translate --cli-tool flow start the greeting demo
-    """
+
+def _execute_translation(cli_tool: str, model_path: str, instruction: tuple):
     nl_instruction = " ".join(instruction)
 
     console.print(f"[dim]Translating for {cli_tool}...[/dim]\n")
@@ -72,6 +61,57 @@ def translate(cli_tool: str, model_path: str, instruction: tuple):
 
     except Exception as e:
         console.print(f"[red]Error:[/red] {e}")
+
+
+@main.command()
+@click.option(
+    "--cli-tool",
+    default="venvy",
+    help="CLI tool to translate for (e.g., venvy, docker)",
+)
+@click.option(
+    "--model-path",
+    default=None,
+    type=click.Path(exists=True),
+    help="Path to GGUF model file (auto-detected if not specified)",
+)
+@click.argument("instruction", nargs=-1, required=True)
+def translate(cli_tool: str, model_path: str, instruction: tuple):
+    """
+    Translate natural language to CLI command.
+
+    Examples:
+        wiz4rd translate --cli-tool flow start the greeting demo
+    """
+    _execute_translation(cli_tool, model_path, instruction)
+
+
+@main.command()
+@click.argument("instruction", nargs=-1, required=True)
+def venvy(instruction: tuple):
+    """Translate a venvy instruction."""
+    _execute_translation(DIRECT_TOOL_MAPPING["venvy"], None, instruction)
+
+
+@main.command()
+@click.argument("instruction", nargs=-1, required=True)
+def docker(instruction: tuple):
+    """Translate a Docker instruction."""
+    _execute_translation(DIRECT_TOOL_MAPPING["docker"], None, instruction)
+
+
+@main.command()
+@click.argument("instruction", nargs=-1, required=True)
+def flow(instruction: tuple):
+    """Translate a flow instruction."""
+    _execute_translation(DIRECT_TOOL_MAPPING["flow"], None, instruction)
+
+
+@main.command()
+@click.argument("instruction", nargs=-1, required=True)
+def atuin(instruction: tuple):
+    """Translate an Atuin instruction."""
+    _execute_translation(DIRECT_TOOL_MAPPING["atuin"], None, instruction)
 
 
 @main.command()

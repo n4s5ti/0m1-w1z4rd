@@ -27,6 +27,18 @@ From any directory:
 
 ```bash
 wiz4rd list-tools
+wiz4rd docker "remake the dockerfile"
+wiz4rd atuin "search my history"
+```
+
+Direct shortcuts accept only explicit tool names (`venvy`, `docker`, `flow`, or
+`atuin`); the `atuin` shortcut uses the personal model.
+
+### Translate an advanced or custom tool
+
+Use `translate --cli-tool` for advanced or custom registry entries:
+
+```bash
 wiz4rd translate --cli-tool flow start the greeting demo
 ```
 
