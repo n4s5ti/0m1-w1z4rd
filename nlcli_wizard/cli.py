@@ -3,6 +3,7 @@ CLI interface for nlcli-wizard - mainly for testing and model management
 """
 
 from pathlib import Path
+from typing import Optional, Tuple
 
 import click
 from rich.console import Console
@@ -11,34 +12,70 @@ from rich.table import Table
 from nlcli_wizard import __version__
 from nlcli_wizard.agent import NLCLIAgent
 from nlcli_wizard.model import ModelManager
+from nlcli_wizard.tool_context import ToolResolutionError, ToolRoute, resolve_tool_route
 
 console = Console()
 
 
-@click.group()
+class WizardGroup(click.Group):
+    """Resolve PATH tools on demand while retaining administrative commands."""
+
+    def get_command(self, ctx: click.Context, cmd_name: str) -> Optional[click.Command]:
+        command = super().get_command(ctx, cmd_name)
+        if command is not None:
+            return command
+
+        try:
+            route: ToolRoute = resolve_tool_route(cmd_name)
+        except ToolResolutionError:
+            return None
+
+        def translate_route(instruction: Tuple[str, ...]) -> None:
+            _execute_translation(
+                route.model_key,
+                None,
+                instruction,
+                requested_tool=route.requested_tool,
+                tool_context=route.help_text,
+                allowed_prefixes=route.allowed_prefixes,
+            )
+
+        return click.Command(
+            cmd_name,
+            params=[click.Argument(["instruction"], nargs=-1, required=True)],
+            callback=translate_route,
+            help="Translate a request for a PATH-resolved CLI tool.",
+        )
+
+
+@click.group(cls=WizardGroup)
 @click.version_option(version=__version__)
-def main():
-    """
-    wiz4rd - Isolated Omi flow-router implementation
-    """
-    pass
+def main() -> None:
+    """wiz4rd - preview a command generated for a CLI tool."""
 
 
-DIRECT_TOOL_MAPPING = {
-    "venvy": "venvy",
-    "docker": "docker",
-    "flow": "flow",
-    "atuin": "personal",
-}
-
-
-def _execute_translation(cli_tool: str, model_path: str, instruction: tuple):
+def _execute_translation(
+    cli_tool: str,
+    model_path: Optional[str],
+    instruction: Tuple[str, ...],
+    requested_tool: Optional[str] = None,
+    tool_context: str = "",
+    allowed_prefixes: Optional[Tuple[Tuple[str, ...], ...]] = None,
+) -> None:
+    requested_tool = requested_tool or cli_tool
+    allowed_prefixes = allowed_prefixes or ((requested_tool,),)
     nl_instruction = " ".join(instruction)
 
-    console.print(f"[dim]Translating for {cli_tool}...[/dim]\n")
+    console.print(f"[dim]Translating for {requested_tool}...[/dim]\n")
 
     model_path_obj = Path(model_path) if model_path else None
-    agent = NLCLIAgent(cli_tool=cli_tool, model_path=model_path_obj)
+    agent = NLCLIAgent(
+        cli_tool=cli_tool,
+        requested_tool=requested_tool,
+        tool_context=tool_context,
+        allowed_prefixes=allowed_prefixes,
+        model_path=model_path_obj,
+    )
 
     try:
         result = agent.translate(nl_instruction)
@@ -76,7 +113,7 @@ def _execute_translation(cli_tool: str, model_path: str, instruction: tuple):
     help="Path to GGUF model file (auto-detected if not specified)",
 )
 @click.argument("instruction", nargs=-1, required=True)
-def translate(cli_tool: str, model_path: str, instruction: tuple):
+def translate(cli_tool: str, model_path: Optional[str], instruction: Tuple[str, ...]) -> None:
     """
     Translate natural language to CLI command.
 
@@ -84,34 +121,6 @@ def translate(cli_tool: str, model_path: str, instruction: tuple):
         wiz4rd translate --cli-tool flow start the greeting demo
     """
     _execute_translation(cli_tool, model_path, instruction)
-
-
-@main.command()
-@click.argument("instruction", nargs=-1, required=True)
-def venvy(instruction: tuple):
-    """Translate a venvy instruction."""
-    _execute_translation(DIRECT_TOOL_MAPPING["venvy"], None, instruction)
-
-
-@main.command()
-@click.argument("instruction", nargs=-1, required=True)
-def docker(instruction: tuple):
-    """Translate a Docker instruction."""
-    _execute_translation(DIRECT_TOOL_MAPPING["docker"], None, instruction)
-
-
-@main.command()
-@click.argument("instruction", nargs=-1, required=True)
-def flow(instruction: tuple):
-    """Translate a flow instruction."""
-    _execute_translation(DIRECT_TOOL_MAPPING["flow"], None, instruction)
-
-
-@main.command()
-@click.argument("instruction", nargs=-1, required=True)
-def atuin(instruction: tuple):
-    """Translate an Atuin instruction."""
-    _execute_translation(DIRECT_TOOL_MAPPING["atuin"], None, instruction)
 
 
 @main.command()

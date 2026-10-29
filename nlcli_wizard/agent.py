@@ -4,9 +4,9 @@ NL-CLI Agent - Core translation logic from natural language to CLI commands
 
 import json
 import re
-import shutil
+import shlex
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 from nlcli_wizard.model import ModelManager
 
@@ -28,24 +28,34 @@ class NLCLIAgent:
         model_path: Optional[Path] = None,
         confidence_threshold: float = 0.6,
         auto_execute: bool = False,
+        requested_tool: Optional[str] = None,
+        tool_context: str = "",
+        allowed_prefixes: Optional[Tuple[Tuple[str, ...], ...]] = None,
     ):
         """
         Initialize the NL-CLI agent.
 
         Args:
-            cli_tool: Name of the CLI tool (e.g., "venvy", "pytest")
+            cli_tool: Model key used to select the GGUF
             model_path: Path to fine-tuned model (downloads if None)
             confidence_threshold: Minimum confidence to suggest command (0-1)
-            auto_execute: Whether to auto-execute without preview (dangerous!)
+            auto_execute: Retained for compatibility; generated commands are never executed
+            requested_tool: CLI executable the generated command must invoke
+            tool_context: Bounded, untrusted CLI reference data
+            allowed_prefixes: Exact argv prefixes accepted for generated commands
         """
         self.cli_tool = cli_tool
+        self.requested_tool = requested_tool or cli_tool
+        self.tool_context = tool_context
+        self.allowed_prefixes = allowed_prefixes or ((self.requested_tool,),)
         self.confidence_threshold = confidence_threshold
         self.auto_execute = auto_execute
 
-        # Initialize model manager
         self.model_manager = ModelManager(
             cli_tool=cli_tool,
             model_path=model_path,
+            tool_context=tool_context,
+            requested_tool=self.requested_tool,
         )
 
     def translate(self, natural_language: str) -> Dict[str, Any]:
@@ -58,6 +68,7 @@ class NLCLIAgent:
         Returns:
             Dictionary with:
                 - command: Generated CLI command string
+                - argv: Validated executable arguments
                 - confidence: Model confidence score when provided, otherwise None
                 - explanation: Brief explanation of what command does
                 - alternatives: List of alternative interpretations
@@ -72,16 +83,18 @@ class NLCLIAgent:
         # Parse model output
         parsed = self._parse_model_output(result)
 
-        # Validate command
-        is_valid = self._validate_command(parsed.get("command", ""))
+        # Parse and validate the model's command before exposing it.
+        argv = self._parse_command_argv(parsed.get("command", ""))
         confidence = parsed.get("confidence")
 
         return {
-            "command": parsed.get("command", ""),
+            "command": shlex.join(argv) if argv else "",
+            "argv": argv or [],
             "confidence": confidence,
             "explanation": parsed.get("explanation", ""),
             "alternatives": parsed.get("alternatives", []),
-            "success": is_valid and (confidence is None or confidence >= self.confidence_threshold),
+            "success": argv is not None
+            and (confidence is None or confidence >= self.confidence_threshold),
         }
 
     def _normalize_input(self, text: str) -> str:
@@ -132,36 +145,33 @@ class NLCLIAgent:
 
         return result
 
-    def _validate_command(self, command: str) -> bool:
-        """
-        Validate that generated command is safe and well-formed.
-
-        Safety checks:
-        - Starts with expected CLI tool name
-        - No shell injection characters (;, &&, ||, >, <, `)
-        - No suspicious patterns
-        """
+    def _parse_command_argv(self, command: str) -> Optional[List[str]]:
+        """Return a safely parsed argv with an exact allowed prefix, or None."""
         if not command:
-            return False
+            return None
 
-        # Check for shell injection patterns before validating the CLI tool.
-        dangerous_chars = [";", "&&", "||", "`", "$"]
-        for char in dangerous_chars:
-            if char in command:
-                return False
+        if re.search(r"[;&|><`$(){}\[\]*?!~\\\n\r]", command):
+            return None
 
-        # Check for redirection (could be legitimate, but risky)
-        if ">" in command or "<" in command:
-            return False
+        try:
+            argv = shlex.split(command, posix=True)
+        except ValueError:
+            return None
 
-        if self.cli_tool == "personal":
-            return bool(shutil.which(command.split(maxsplit=1)[0]))
+        if not argv:
+            return None
 
-        # Must start with CLI tool name
-        if not command.startswith(self.cli_tool):
-            return False
+        if not any(
+            len(argv) >= len(prefix) and tuple(argv[: len(prefix)]) == prefix
+            for prefix in self.allowed_prefixes
+        ):
+            return None
 
-        return True
+        return argv
+
+    def _validate_command(self, command: str) -> bool:
+        """Compatibility wrapper for callers that only require a validity check."""
+        return self._parse_command_argv(command) is not None
 
     def get_command_preview(self, natural_language: str) -> str:
         """

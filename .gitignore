@@ -80,7 +80,6 @@ Thumbs.db
 
 # --- Local tool state ---
 .claude/settings.local.json
-.nlcli_wizard/
 .wiz4rd/
 history.json
 .env

@@ -43,12 +43,22 @@ Editable mode is required because the bundled GGUF remains in checkout-relative
 `models/`, which is excluded from wheel data. It makes the global `wiz4rd`
 command resolve that model while retaining the `nlcli_wizard` import package.
 
-From any directory, inspect the flow registry or produce a preview:
+From any directory, inspect the registered tools, inspect local model state, or
+produce a preview:
 
 ```bash
 wiz4rd list-tools
-wiz4rd translate --cli-tool flow start the greeting demo
+wiz4rd model-info
+wiz4rd cache-dir
+wiz4rd docker "build an image tagged demo"
+wiz4rd translate --cli-tool flow "start the greeting demo"
 ```
+
+`wiz4rd <tool> <request...>` resolves only a tool executable available on
+`PATH`. It produces a preview and never executes the candidate. `venvy`,
+`docker`, and `flow` use dedicated models; `atuin` and all other resolved tools
+use the personal model. `--help` output is reference material, not trusted
+instructions.
 
 The `flow` registry entry returns a candidate only; it does not execute a flow.
 

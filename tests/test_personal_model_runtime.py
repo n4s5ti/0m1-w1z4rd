@@ -1,13 +1,12 @@
-from types import SimpleNamespace
-
-import nlcli_wizard.agent as agent_module
 from nlcli_wizard.agent import NLCLIAgent
 from nlcli_wizard.model import ModelManager
 
 
-def _agent_for_validation(cli_tool):
+def _agent_for_validation(model_key, requested_tool=None):
     agent = object.__new__(NLCLIAgent)
-    agent.cli_tool = cli_tool
+    agent.cli_tool = model_key
+    agent.requested_tool = requested_tool or model_key
+    agent.allowed_prefixes = ((agent.requested_tool,),)
     return agent
 
 
@@ -21,6 +20,8 @@ def test_personal_registry_entry_is_local_only_with_personal_model_filename():
 def test_personal_prompt_contains_the_exact_training_user_turn():
     manager = object.__new__(ModelManager)
     manager.cli_tool = "personal"
+    manager.requested_tool = "personal"
+    manager.tool_context = ""
 
     prompt = manager._build_prompt("compile the package")
 
@@ -29,55 +30,20 @@ def test_personal_prompt_contains_the_exact_training_user_turn():
     ) in prompt
 
 
-def test_personal_validation_accepts_an_installed_command_prefix(monkeypatch):
-    lookups = []
-
-    def resolve_executable(executable):
-        lookups.append(executable)
-        return "/mock/bin/cargo" if executable == "cargo" else None
-
-    monkeypatch.setattr(
-        agent_module,
-        "shutil",
-        SimpleNamespace(which=resolve_executable),
-        raising=False,
-    )
-    agent = _agent_for_validation("personal")
+def test_personal_model_accepts_the_requested_executable_prefix():
+    agent = _agent_for_validation("personal", requested_tool="cargo")
 
     assert agent._validate_command("cargo build") is True
-    assert lookups == ["cargo"]
 
 
-def test_personal_validation_rejects_a_command_with_no_installed_executable(monkeypatch):
-    lookups = []
+def test_personal_model_rejects_another_executable_prefix():
+    agent = _agent_for_validation("personal", requested_tool="cargo")
 
-    def resolve_executable(executable):
-        lookups.append(executable)
-        return None
-
-    monkeypatch.setattr(
-        agent_module,
-        "shutil",
-        SimpleNamespace(which=resolve_executable),
-        raising=False,
-    )
-    agent = _agent_for_validation("personal")
-
-    assert agent._validate_command("missing-command run") is False
-    assert lookups == ["missing-command"]
+    assert agent._validate_command("git status") is False
 
 
-def test_personal_validation_rejects_shell_injection_before_executable_lookup(monkeypatch):
-    def unexpected_lookup(executable):
-        raise AssertionError(f"shell injection reached executable lookup: {executable}")
-
-    monkeypatch.setattr(
-        agent_module,
-        "shutil",
-        SimpleNamespace(which=unexpected_lookup),
-        raising=False,
-    )
-    agent = _agent_for_validation("personal")
+def test_personal_validation_rejects_shell_injection():
+    agent = _agent_for_validation("personal", requested_tool="cargo")
 
     assert agent._validate_command("cargo build; echo compromised") is False
 
